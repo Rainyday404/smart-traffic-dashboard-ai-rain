@@ -1,17 +1,20 @@
-import json, time, random, os
+import json
+import time
+import random
+import os
 from datetime import datetime
 
-# Menentukan lokasi output data streaming
+# Konfigurasi Path Output
 OUTPUT_PATH = "stream_data/transportation"
 os.makedirs(OUTPUT_PATH, exist_ok=True)
 
-# Data simulasi
+# Data Referensi
 locations = ["Jakarta", "Bandung", "Surabaya"]
 vehicles = ["Car", "Motorbike", "Taxi"]
 
 i = 1
 while True:
-    # Membuat data simulasi perjalanan
+    # Membuat data dummy perjalanan
     data = {
         "trip_id": f"TRX{i}",
         "vehicle_type": random.choice(vehicles),
@@ -21,11 +24,12 @@ while True:
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
-    # Menyimpan data ke dalam file JSON
-    with open(f"{OUTPUT_PATH}/trip_{i}.json", "w") as f:
+    # Menyimpan data ke file JSON
+    file_name = f"{OUTPUT_PATH}/trip_{i}.json"
+    with open(file_name, "w") as f:
         json.dump(data, f)
 
     print("Generated Trip:", data)
     
     i += 1
-    time.sleep(3) # Jeda 3 detik sebelum generate data berikutnya
+    time.sleep(3)

@@ -66,8 +66,22 @@ def detect_peak_hour(df):
     return df.groupby("hour").size().idxmax()
 
 # ============================
-# VISUALIZATION DATA
+# WINDOWING & VISUALIZATION
 # ============================
+def traffic_per_window(df):
+    """
+    Menghitung jumlah traffic per interval 1 menit.
+    """
+    if df.empty:
+        return None
+    
+    # Memastikan kolom timestamp adalah datetime
+    df['timestamp'] = pd.to_datetime(df['timestamp'])
+
+    return df.set_index('timestamp') \
+        .resample('1min') \
+        .size()
+
 def fare_per_location(df):
     if df.empty:
         return pd.Series()
@@ -87,8 +101,8 @@ def mobility_trend(df):
         return pd.Series()
     
     # Resampling data berdasarkan interval 10 detik untuk melihat tren
-    df = df.set_index("timestamp")
-    return df["fare"].resample("10s").sum()
+    df_temp = df.set_index("timestamp")
+    return df_temp["fare"].resample("10s").sum()
 
 # ============================
 # ANOMALY DETECTION
