@@ -1,91 +1,64 @@
-# 🚗 Smart Transportation: Real-Time Analytics Platform
-<p align="center">
-  <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" />
-  <img src="https://img.shields.io/badge/Apache_Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white" />
-  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white" />
-  <img src="https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white" />
-  <img src="https://img.shields.io/badge/Ubuntu-E94302?style=for-the-badge&logo=ubuntu&logoColor=white" />
-</p>
+# Smart City Traffic Prediction AI - Big Data Technology
 
----
+Proyek ini merupakan implementasi dari **Modul Praktikum 7** mata kuliah Teknologi Big Data. [cite_start]Fokus utama adalah membangun pipeline Machine Learning untuk memprediksi volume lalu lintas menggunakan algoritma Random Forest dan visualisasi dashboard real-time[cite: 6, 18, 20].
 
-## 👤 Profil Pengembang
-* **Nama:** Ivan Dwika Bagaskara (Rain)
-* **NIM:** 230104040205
-* **Prodi:** Teknologi Informasi
-* **Instansi:** UIN Antasari Banjarmasin
-* **GitHub:** [Rainyday404](https://github.com/Rainyday404)
+## 👤 Identitas Mahasiswa
+- **Nama:** Ivan Dwika Bagaskara
+- **NIM:** 230104040205
+- **Program Studi:** Teknologi Informasi
 
-## 👨‍🏫 Dosen Pengampu
-* **Nama:** Muhayat, M.IT
-* **GitHub:** [muhayat-lab](https://github.com/muhayat-lab)
+## 🛠️ Stack Teknologi
+- **Bahasa Pemrograman:** Python 
+- **Environment:** Linux Server Environment (WSL Ubuntu) 
+- **Editor:** VS Code (Remote WSL) 
+- **Engine:** Apache Spark (PySpark) 
+- **Library Utama:** Pandas, Scikit-Learn (Random Forest), Joblib, Streamlit 
 
----
-
-## 📝 Deskripsi Proyek
-Proyek ini adalah platform **Real-Time Analytics** yang dirancang untuk memantau data transportasi secara instan. Menggunakan arsitektur Big Data modern, sistem ini mensimulasikan data perjalanan (Trip), memprosesnya menggunakan **PySpark Structured Streaming**, dan memvisualisasikannya melalui dashboard interaktif.
-
-### Fitur Utama:
-- ⚡ **Real-Time Pipeline:** Pemrosesan data tanpa jeda dari JSON ke format Parquet.
-- 📊 **Dynamic Dashboard:** Visualisasi tren mobilitas dan distribusi kendaraan per 10 detik.
-- 🚦 **Intelligent Alerting:** Peringatan otomatis jika terjadi lonjakan trafik atau harga tidak wajar.
-- 🛠️ **Modular Design:** Pemisahan logika analisis (`analytics`) dan sistem peringatan (`alerts`).
-
----
-
-## 📂 Struktur Project
-```text
-BIGDATA-PROJECT/
-├── alerts/                # Modul sistem peringatan (Alerting System)
-├── analytics/             # Modul logika analisis data (Metrics)
-├── dashboard/             # Antarmuka visual (Streamlit)
+## 📂 Struktur Proyek
+[cite_start]Sesuai dengan panduan praktikum, proyek ini disusun sebagai berikut:
+```bash
+bigdata-project/
+├── analytics/
+│   └── traffic_ml_model_v1.py        # Script pelatihan model ML
+├── dashboard/
+│   └── traffic_dashboard_v1.py       # Dashboard interaktif Streamlit
 ├── data/
-│   ├── checkpoints/       # Metadata streaming Spark
-│   └── serving/           # Data hasil olahan (Parquet format)
+│   ├── raw/                          # Dataset mentah (.csv)
+│   └── clean/                        # Dataset hasil pembersihan
+├── models/
+│   └── traffic_model_v1.pkl          # File model tersimpan
 ├── scripts/
-│   └── transportation/    # Script Generator & Pipeline Streaming
-└── screenshots/           # Dokumentasi visual praktikum
-````
+│   └── traffic_data_cleaning_v1.py   # Script pembersihan data
+└── README.md
+```
 
------
+## 🚀 Langkah-Langkah Menjalankan Proyek
 
-## ⚙️ Panduan Menjalankan Sistem
+### 1. Persiapan Data (Data Cleaning)
+Membersihkan dataset mentah dari folder `data/raw/` dan menyimpannya ke `data/clean/`.
+```bash
+python scripts/traffic_data_cleaning_v1.py
+```
 
-Jalankan setiap perintah pada terminal terpisah di dalam root project:
+### 2. Pelatihan Model (Feature Engineering & Modeling)
+Melakukan ekstraksi fitur waktu (*hour*, *day*, *lag*) dan melatih model *Random Forest Regressor*.
+```bash
+python analytics/traffic_ml_model_v1.py
+```
 
-1.  **Jalankan Data Generator:**
-    ```bash
-    python scripts/transportation/trip_generator.py
-    ```
-2.  **Jalankan Spark Streaming:**
-    ```bash
-    spark-submit scripts/transportation/streaming_trip_layer.py
-    ```
-3.  **Jalankan Streamlit Dashboard:**
-    ```bash
-    streamlit run dashboard/dashboard_transportation.py
-    ```
+### 3. Visualisasi Dashboard
+Menjalankan dashboard modern berbasis Streamlit untuk melihat tren dan melakukan simulasi prediksi.
+```bash
+streamlit run dashboard/traffic_dashboard_v1.py
+```
 
------
 
-## ## 🌧️ Output Wajib (Dokumentasi Tugas)
 
-### A. Persiapan & Struktur
-| Komponen | Screenshot |
-| :--- | :---: |
-| **Struktur Project** | ![Struktur](./screenshots/screenshot_struktur_project.png) |
-| **Data Serving** | ![Folder Data](./screenshots/screenshot_folder_data_serving.png) |
+## 📊 Insight Praktikum
+- **Feature Engineering:** Penggunaan fitur waktu seperti jam dan hari sangat kuat dalam menentukan pola kemacetan.
+- **Model Efficiency:** Model Random Forest mampu menangkap pola non-linear pada data traffic dengan baik.
+- **Smart City Integration:** Sistem ini mensimulasikan bagaimana AI dapat digunakan untuk *Adaptive Traffic Control System*.
 
-### B. Proses Streaming & Generation
-| Komponen | Screenshot |
-| :--- | :---: |
-| **Data Generator** | ![Generator](./screenshots/generator.png) |
-| **Spark Engine** | ![Spark Streaming](./screenshots/screenshot_spark_streaming.png) |
-
-### C. Analisis & Visualisasi (Insight)
-| Fitur | Screenshot |
-| :--- | :---: |
-| **Dashboard Utama** | ![Dashboard 1](./screenshots/screenshot_dashboard_(insight%20+%20alert)_1.png) |
-| **Analisis Grafik** | ![Dashboard 2](./screenshots/screenshot_dashboard_(insight%20+%20alert)_2.png) |
-| **Deteksi Anomali** | ![Dashboard 3](./screenshots/screenshot_dashboard_(insight%20+%20alert)_3.png) |
------
+---
+*Laporan ini dibuat sebagai syarat pemenuhan tugas Modul Praktikum Big Data Technology 2026.* 
+```
